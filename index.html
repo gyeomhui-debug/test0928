@@ -43,6 +43,6 @@ const cards=document.getElementById('cards'),input=document.getElementById('keyw
 const n=a=>Number((String(a['조']||'').match(/\d+/)||[999])[0]);
 const summary=t=>{const s=String(t||'').replace(/\s+/g,' ').trim();return s.length>180?s.slice(0,180)+'…':s};
 function render(){const q=input.value.trim().toLowerCase();const rows=data.filter(a=>((a['제목']||'')+' '+(a['본문']||'')).toLowerCase().includes(q));count.textContent='결과 '+rows.length+'건';cards.innerHTML=rows.length?rows.map(a=>`<article class="card"><div class="meta"><span class="badge">${a['조']}</span><h2>${a['제목']}</h2></div><p>${summary(a['본문'])}</p></article>`).join(''):'<div class="empty">검색 결과가 없습니다.</div>'}
-fetch('./조항데이터.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json()}).then(x=>{data=x.filter(a=>n(a)>=1&&n(a)<=14).sort((a,b)=>n(a)-n(b));render()}).catch(e=>{cards.innerHTML='<div class="empty">조항데이터.json 로드 실패: '+e.message+'</div>'});input.addEventListener('input',render);
+fetch('https://raw.githubusercontent.com/gyeomhui-debug/test0928/main/%EC%A1%B0%ED%95%AD%EB%8D%B0%EC%9D%B4%ED%84%B0.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json()}).then(x=>{data=x.filter(a=>n(a)>=1&&n(a)<=14).sort((a,b)=>n(a)-n(b));render()}).catch(e=>{cards.innerHTML='<div class="empty">조항데이터.json 로드 실패: '+e.message+'</div>'});input.addEventListener('input',render);
 </script>
 </body></html>
